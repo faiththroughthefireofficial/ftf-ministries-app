@@ -31,4 +31,35 @@ form.addEventListener('submit',async function(event){
  }catch(error){status.textContent=error.message||'Unable to send request. Please try again.';}
  finally{submit.disabled=false;window.turnstile?.reset();}
 });
-})();</script></body></html>
+})();</script>
+<script>
+(function () {
+  const notes = document.getElementById('study-notes');
+  const button = document.getElementById('save-notes');
+  const status = document.getElementById('notes-status');
+  const storageKey = 'ftf-study-reflections-v1';
+
+  if (!notes || !button || !status) return;
+
+  notes.disabled = false;
+  notes.placeholder = 'Write your personal reflection here...';
+
+  try {
+    notes.value = localStorage.getItem(storageKey) || '';
+  } catch (error) {
+    status.textContent = 'Local storage is unavailable.';
+  }
+
+  button.addEventListener('click', function () {
+    try {
+      localStorage.setItem(storageKey, notes.value);
+      status.textContent = 'Your reflection was saved on this device.';
+    } catch (error) {
+      status.textContent = 'Unable to save. Please check your browser settings.';
+    }
+  });
+
+  status.textContent = 'Notes are stored only in this browser, not synced or encrypted. Avoid sensitive information on shared devices.';
+})();
+</script>
+</body></html>
