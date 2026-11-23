@@ -78,13 +78,7 @@
       detail.append(element('summary', `Day ${day} — ${lesson.title}`), content);
       content.append(element('p', lesson.scripture ? `📖 Read: ${lesson.scripture}` :
         '📖 Scripture reading: See the corresponding lesson in your published workbook'));
-      if (lesson.body) {
-        for (const paragraph of lesson.body.split(/\n+/)) {
-          content.append(element('p', paragraph));
-        }
-      } else {
-        content.append(element('p', 'Reflect: What does this lesson teach you about God, and how will you apply it today?'));
-      }
+      content.append(element('p', 'Reflect: What does this lesson teach you about God, and how will you apply it today?'));
       const listen = element('p');
       const link = element('a', '🎧 Listen on Spotify — choose an episode');
       link.href = spotify;
@@ -128,8 +122,7 @@
           typeof week.title !== 'string' || !week.title.trim() || !Array.isArray(week.lessons) ||
           !week.lessons.length || !week.lessons.every(lesson =>
             typeof lesson?.title === 'string' && lesson.title.trim() &&
-            (lesson.scripture == null || typeof lesson.scripture === 'string') &&
-            (lesson.body == null || typeof lesson.body === 'string'))) continue;
+            (lesson.scripture == null || typeof lesson.scripture === 'string'))) continue;
       renderWeek(week, week.number);
       seen.add(week.number);
     }
